@@ -8,9 +8,14 @@ from pybrain.structure.modules   import SoftmaxLayer
 from pylab import ion, ioff, figure, draw, contourf, clf, show, hold, plot,pause,axis, xlabel,ylabel,title,grid,legend
 import numpy as np
 import time
+import sys
 start_time = time.time()
-LIST_ARG=1000
+LIST_ARG=3000
 ITERATIONS=200
+if(len(sys.argv)>1 and sys.argv[1]>0):
+    LIST_ARG=int(sys.argv[1])
+    if (len(sys.argv) > 2 and sys.argv[2] > 0):
+        ITERATIONS = int(sys.argv[2])
 
 def getPseudoId(nom):
     for i in range(len(pseudo)):
@@ -48,7 +53,7 @@ for row in liste:
 pseudo=sorted(list(pseudo))
 print "number of author "+str(len(pseudo))
 print "number of lines "+str(len(liste))
-print "number of parameters "+str(len(liste[0])-1)
+print "number of parameters "+str(len(liste[:LIST_ARG]))
 #print len(pseudo)
 liste_finale=[]
 for row in liste:
@@ -99,12 +104,23 @@ epoch=[]
 train=[]
 test=[]
 figure(1)
+ioff()  # interactive graphics off
+clf()  # clear the plot
+hold(True)  # overplot on
 ylabel('Error (%)')
 xlabel('Iterations')
-title('Neural Network Classification with '+str(LIST_ARG)+' arguments')
-axis([0, ITERATIONS+1, 0, 100])
+title('Neural Network Classification with ' + str(LIST_ARG) + ' arguments')
+axis([0, ITERATIONS, 0, 100])
+
 grid(True)
-ion()
+plot(epoch, train, 'o', label='training data')
+plot(epoch, test, '+', label='test data')
+legend(bbox_to_anchor=(0.6, 0.85, 0.402, .102), loc=3,
+       ncol=1, mode="expand", borderaxespad=0.)
+ion()  # interactive graphics on
+draw()  # update the plot
+show()
+pause(0.0001)
 time_last=time.time()
 for i in range(ITERATIONS):
     trainer.trainEpochs(1)
@@ -138,6 +154,5 @@ for i in range(ITERATIONS):
     show()
     pause(0.0001)
 ioff()
-import time
 print("--- %s seconds ---" % (time.time() - start_time))
 show()

@@ -1,0 +1,12 @@
+➜  projet git:(master) ✗ python reader.py 10000 5
+number of author 50
+number of lines 1500
+number of parameters 1500
+Number of training patterns:  1125
+Input and output dimensions:  10000 50
+First sample (input, target, class):
+[ 21.  10.   4. ...,   0.   0.   0.] Vernon [46]
+Total error:  0.0190966318921
+epoch:    1   train error: 97.60%   test error: 99.20%
+compute in 10992.4630449
+-----------
